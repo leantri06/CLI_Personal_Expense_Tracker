@@ -2,7 +2,7 @@
 Ứng dụng Quản Lý Chi Tiêu Cá Nhân (CLI Personal Expense Tracker)
 Giai đoạn 1: Nền tảng & Vòng lặp cơ bản
 """
-
+from datetime import datetime
 # ==========================================
 # 1. KHỞI TẠO BỘ NHỚ TẠM (RAM)
 # ==========================================
@@ -32,7 +32,7 @@ def show_menu():
 def add_transaction():
     """Hàm thêm một giao dịch mới vào danh sách transactions"""
     global next_id
-
+    today_str = datetime.now().strftime("%d-%m-%Y")
     print("\n--- THÊM GIAO DỊCH MỚI ---")
     
     # TODO 1.4: Nhập loại giao dịch (Thu hay Chi)
@@ -49,10 +49,27 @@ def add_transaction():
             print("Nhập sai thông tin. Yêu cầu nhập lại")
     # TODO 1.5: Nhập số tiền và ép kiểu sang float
     # Gợi ý: float(input(...))
-    amount = float(input("Nhập số tiền (VNĐ): "))
+    while True:
+        try:
+            amount = float(input("Nhập số tiền (VNĐ): "))
+            if amount <= 0:
+                print(" Số tiền phải lớn hơn 0!")
+                continue
+            break
+        except ValueError:
+            print("Lỗi: Vui lòng nhập số, không nhập ký tự lạ!")
     # TODO 1.6: Nhập danh mục (Ăn uống, Lương...), ngày tháng, và ghi chú
     catagory = input("Nhập danh mục (Ăn uống, Lương, Mua sắm): ")
-    date = input("Nhập ngày giao dịch: ")
+    date_input = input(f"Nhập ngày (DD-MM-YYYY, mặc định {today_str}): ").strip()
+    if not date_input:
+        date = today_str
+    else:
+        try:
+            datetime.strptime(date_input, "%d-%m-%Y")
+            date = date_input
+        except ValueError:
+            print("Định dạng ngày không hợp lệ, tự động lấy ngày hôm nay.")
+            date = today_str
     note = input("Nhập ghi chú: ")
     if note == "":
         note = "Không"
@@ -68,8 +85,9 @@ def add_transaction():
     # TODO 1.8: Thêm dictionary vừa tạo vào danh sách transactions (dùng .append())
     transactions.append(transaction)
     # TODO 1.9: Tăng next_id lên 1 đơn vị
-    next_id += 1
     print(f"Đã thêm giao dịch #{next_id} thành công!")
+    next_id += 1
+
 
 def list_transactions():
     """Hàm hiển thị tất cả các giao dịch"""
