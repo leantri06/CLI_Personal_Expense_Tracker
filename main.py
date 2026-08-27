@@ -23,6 +23,8 @@ def show_menu():
     print("1. Thêm giao dịch mới")
     # 2. Xem danh sách giao dịch
     print("2. Xem danh sách giao dịch")
+    # 3. Xoá giao dịch
+    print("3. Xoá giao dịch")
     # 0. Thoát
     print("0. Thoát")
     # (Gợi ý: Dùng các lệnh print())
@@ -101,6 +103,28 @@ def list_transactions():
         print(f"Mã: {item['id']:<5} | Ngày: {item['date']} | Loại: {item['type']} | Số tiền: {item['amount']:,.0f} | Danh mục: {item['category']} | Ghi chú: {item['note']}")
     # TODO 1.11: Dùng vòng lặp for để duyệt qua từng giao dịch trong transactions và in ra màn hình
 
+def delete_transaction():
+    if not transactions:
+        print("Chưa có giao dịch nào để xoá!")
+        return
+    while True:
+        try:
+            delete_id = int(input("Nhập id giao dịch cần xoá: "))
+            if delete_id <= 0:
+                print("Id phải là số lớn hơn 0!")
+                continue
+            break
+        except ValueError:
+            print("Nhập Id là một con số, không nhập ký tự lạ.")
+    found = False
+    for item in transactions:
+        if item['id'] == delete_id:
+            transactions.remove(item)
+            print("Xoá giao dịch thành công!")
+            found = True
+            break
+    if not found:
+        print(f"Không tìm thấy giao dịch có mã #{delete_id}!")
 
 def main():
     """Vòng lặp chính điều khiển chương trình"""
@@ -113,7 +137,7 @@ def main():
                 # - Nếu chọn 2 -> gọi list_transactions()
                 # - Nếu chọn 0 -> in lời chào và dùng 'break' để thoát vòng lặp
                 # - Khác -> in thông báo lựa chọn không hợp lệ
-        choice = input("Nhập lựa chọn của bạn (0-2): ")
+        choice = input("Nhập lựa chọn của bạn (0-3): ")
         if choice == "0":
             print("\n Cảm ơn bạn đã sử dụng ứng dụng! Tạm biệt.")
             break
@@ -121,6 +145,8 @@ def main():
             add_transaction()
         elif choice == "2":
             list_transactions()
+        elif choice == "3":
+            delete_transaction()
         else:
             print("\n Lựa chọn không hợp lệ! Vui lòng chọn lại.")
         
