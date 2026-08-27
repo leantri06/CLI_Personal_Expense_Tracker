@@ -25,6 +25,8 @@ def show_menu():
     print("2. Xem danh sách giao dịch")
     # 3. Xoá giao dịch
     print("3. Xoá giao dịch")
+    # 4. Báo cáo thống kê
+    print("4. Báo cáo thống kê")
     # 0. Thoát
     print("0. Thoát")
     # (Gợi ý: Dùng các lệnh print())
@@ -126,6 +128,31 @@ def delete_transaction():
     if not found:
         print(f"Không tìm thấy giao dịch có mã #{delete_id}!")
 
+def view_summary():
+    if not transactions:
+            print("Không tìm thấy giao dịch nào để thống kê!")
+            return
+    
+    total_income = sum(item['amount'] for item in transactions if item['type'] == "Income")
+    total_expense = sum(item['amount'] for item in transactions if item['type'] == "Expense")
+    balance = total_income - total_expense
+
+    print(f"Tổng thu nhập: {total_income:,.0f} VNĐ")
+    print(f"Tổng chi tiêu: {total_expense:,.0f} VNĐ")
+    print(f"Số dư hiện tại: {balance:,.0f} VNĐ")
+
+    category_spending = {}
+    for item in transactions:
+        if item['type'] == "Expense":
+            cat = item['category']
+            if cat in category_spending:
+                category_spending[cat] += item['amount']
+            else:
+                category_spending[cat] = item['amount']
+    if category_spending:
+        top_cat = max(category_spending, key=category_spending.get)
+        print(f"Chi tiêu nhiều nhất cho: {top_cat}: {category_spending[top_cat]:,.0f} VNĐ")
+
 def main():
     """Vòng lặp chính điều khiển chương trình"""
     while True:
@@ -137,7 +164,7 @@ def main():
                 # - Nếu chọn 2 -> gọi list_transactions()
                 # - Nếu chọn 0 -> in lời chào và dùng 'break' để thoát vòng lặp
                 # - Khác -> in thông báo lựa chọn không hợp lệ
-        choice = input("Nhập lựa chọn của bạn (0-3): ")
+        choice = input("Nhập lựa chọn của bạn (0-4): ")
         if choice == "0":
             print("\n Cảm ơn bạn đã sử dụng ứng dụng! Tạm biệt.")
             break
@@ -147,6 +174,8 @@ def main():
             list_transactions()
         elif choice == "3":
             delete_transaction()
+        elif choice == "4":
+            view_summary()
         else:
             print("\n Lựa chọn không hợp lệ! Vui lòng chọn lại.")
         
