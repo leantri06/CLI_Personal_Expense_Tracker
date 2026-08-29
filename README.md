@@ -52,7 +52,7 @@ CLI_Personal_Expense_Tracker/
 
 ### 2. Tải mã nguồn về máy
 ```bash
-git clone https://github.com/<tên-tài-khoản-của-bạn>/CLI_Personal_Expense_Tracker.git
+git clone https://github.com/leantri06/CLI_Personal_Expense_Tracker.git
 cd CLI_Personal_Expense_Tracker
 ```
 
