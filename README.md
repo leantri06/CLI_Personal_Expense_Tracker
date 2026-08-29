@@ -88,6 +88,3 @@ python main.py
 ```
 
 ---
-
-## 📝 Giấy Phép (License)
-Dự án được phân phối dưới giấy phép mã nguồn mở [MIT License](LICENSE).
