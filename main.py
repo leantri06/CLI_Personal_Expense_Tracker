@@ -3,6 +3,7 @@
 Giai đoạn 1: Nền tảng & Vòng lặp cơ bản
 """
 from datetime import datetime
+import json
 # ==========================================
 # 1. KHỞI TẠO BỘ NHỚ TẠM (RAM)
 # ==========================================
@@ -63,7 +64,19 @@ def add_transaction():
         except ValueError:
             print("Lỗi: Vui lòng nhập số, không nhập ký tự lạ!")
     # TODO 1.6: Nhập danh mục (Ăn uống, Lương...), ngày tháng, và ghi chú
-    catagory = input("Nhập danh mục (Ăn uống, Lương, Mua sắm): ")
+    while True:
+        catagory_choice = input("Nhập danh mục (1: Ăn uống, 2: Lương, 3: Mua sắm): ")
+        if catagory_choice == "1":
+            catagory = "Ăn uống"
+            break
+        elif catagory_choice == "2":
+            catagory = "Lương"
+            break
+        elif catagory_choice == "3":
+            catagory = "Mua sắm"
+            break
+        else:
+            print("Nhập sai thông tin. Yêu cầu nhập lại")
     date_input = input(f"Nhập ngày (DD-MM-YYYY, mặc định {today_str}): ").strip()
     if not date_input:
         date = today_str
@@ -90,6 +103,7 @@ def add_transaction():
     transactions.append(transaction)
     # TODO 1.9: Tăng next_id lên 1 đơn vị
     print(f"Đã thêm giao dịch #{next_id} thành công!")
+    save_to_json()
     next_id += 1
 
 
@@ -127,6 +141,7 @@ def delete_transaction():
             break
     if not found:
         print(f"Không tìm thấy giao dịch có mã #{delete_id}!")
+    save_to_json()
 
 def view_summary():
     if not transactions:
@@ -153,7 +168,29 @@ def view_summary():
         top_cat = max(category_spending, key=category_spending.get)
         print(f"Chi tiêu nhiều nhất cho: {top_cat}: {category_spending[top_cat]:,.0f} VNĐ")
 
+def save_to_json(filename = "expenses.json"):
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(transactions, f, indent = 4, ensure_ascii=False)
+    print("Đã lưu dữ liệu vào file thành công")
+
+def load_from_json(filename = "expenses.json"):
+    global transactions, next_id
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            transactions = json.load(f)
+            if transactions:
+                max_id = max(item['id'] for item in transactions)
+                next_id = max_id + 1
+            else:
+                next_id = 1
+        print(f"Đã nạp thành công {len(transactions)} giao dịch từ bộ nhớ!")
+    except FileNotFoundError:
+        transactions = []
+        next_id = 1
+        print("Chưa tìm thấy file dữ liệu cũ, đã tạo phiên làm việc mới.")
+
 def main():
+    load_from_json()
     """Vòng lặp chính điều khiển chương trình"""
     while True:
         show_menu()
