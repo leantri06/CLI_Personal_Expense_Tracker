@@ -23,5 +23,5 @@ class Transaction:
             amount = data['amount'],
             category = data['category'],
             date = data['date'],
-            note = data['note', 'Không']
+            note = data.get('note', 'Không')
         )
