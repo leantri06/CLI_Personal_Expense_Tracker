@@ -65,15 +65,15 @@ def add_transaction():
             print("Lỗi: Vui lòng nhập số, không nhập ký tự lạ!")
     # TODO 1.6: Nhập danh mục (Ăn uống, Lương...), ngày tháng, và ghi chú
     while True:
-        catagory_choice = input("Nhập danh mục (1: Ăn uống, 2: Lương, 3: Mua sắm): ")
-        if catagory_choice == "1":
-            catagory = "Ăn uống"
+        category_choice = input("Nhập danh mục (1: Ăn uống, 2: Lương, 3: Mua sắm): ")
+        if category_choice == "1":
+            category = "Ăn uống"
             break
-        elif catagory_choice == "2":
-            catagory = "Lương"
+        elif category_choice == "2":
+            category = "Lương"
             break
-        elif catagory_choice == "3":
-            catagory = "Mua sắm"
+        elif category_choice == "3":
+            category = "Mua sắm"
             break
         else:
             print("Nhập sai thông tin. Yêu cầu nhập lại")
@@ -95,7 +95,7 @@ def add_transaction():
         "id": next_id,
         "type": trans_type,
         "amount": amount,
-        "category": catagory,
+        "category": category,
         "date": date,
         "note": note
     }
