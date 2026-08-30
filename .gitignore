@@ -2,4 +2,4 @@ __pycache__/
 *.__pyc
 .vscode/
 .idea/
-expenses.jsongit rm --cached expenses.json
+expenses.json

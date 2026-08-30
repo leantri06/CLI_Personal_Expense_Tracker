@@ -31,7 +31,7 @@ with st.sidebar:
     with st.form("add_form", clear_on_submit=True):
         trans_type = st.selectbox("Loại", ["Expense", "Income"], format_func=lambda x: "💸 Chi tiêu (Expense)" if x == "Expense" else "💰 Thu nhập (Income)")
         amount = st.number_input("Số tiền (VNĐ)", min_value=1000, step=5000, value=50000)
-        category = st.selectbox("Danh mục", ["Ăn uống", "Lương", "Mua sắm", "Giải trí", "Học tập", "Khác"])
+        category = st.selectbox("Danh mục", ["Ăn uống", "Lương", "Mua sắm", "Giải trí", "Học tập", "Xăng", "Khác"])
         date_selected = st.date_input("Ngày giao dịch")
         note = st.text_input("Ghi chú", placeholder="Ví dụ: Cà phê sáng...")
         
