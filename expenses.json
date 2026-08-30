@@ -1,18 +1,10 @@
 [
     {
-        "id": 1,
+        "id": 3,
         "type": "Expense",
-        "amount": 100000.0,
+        "amount": 26000.0,
         "category": "Ăn uống",
-        "date": "29-08-2026",
-        "note": "Không"
-    },
-    {
-        "id": 2,
-        "type": "Income",
-        "amount": 10000000.0,
-        "category": "Lương",
-        "date": "29-08-2026",
-        "note": "Không"
+        "date": "30-08-2026",
+        "note": "Uống trà sữa"
     }
 ]
