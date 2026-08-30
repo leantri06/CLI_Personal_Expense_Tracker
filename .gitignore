@@ -2,4 +2,4 @@ __pycache__/
 *.__pyc
 .vscode/
 .idea/
-expenses.json/
+expenses.json
